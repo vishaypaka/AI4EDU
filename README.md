@@ -30,8 +30,8 @@ Install the following before running the app:
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/ai-case-writer.git
-   cd ai-case-writer
+   git clone https://github.com/vishaypaka/AI4EDU.git
+   cd AI4EDU
 ## Install dependencies:
 pip install -r requirements.txt
 
