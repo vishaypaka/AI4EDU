@@ -114,16 +114,20 @@ def extract_text_from_file(file):
 
 
 def transcribe_audio(file):
-
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".m4a") as temp:
-
+    suffix = os.path.splitext(file.name)[1]  # Use correct file extension
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as temp:
         temp.write(file.read())
-
+        temp.flush()
         temp_path = temp.name
 
-    result = whisper_model.transcribe(temp_path)
-
-    return result["text"]
+    try:
+        result = whisper_model.transcribe(temp_path)
+        return result["text"]
+    except Exception as e:
+        st.warning(f"❌ Whisper transcription failed: {e}")
+        return ""
+    finally:
+        os.remove(temp_path)  # Optional: clean up temp file
 
 def parse_markdown_table(text):
     lines = [line.strip() for line in text.strip().split("\n") if "|" in line]
